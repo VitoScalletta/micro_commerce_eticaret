@@ -1,9 +1,14 @@
 package com.microcommerce.productservice.config;
 
-import jakarta.validation.constraints.NotBlank;
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import java.math.BigDecimal;
-
+@Configuration
 public class MapperConfig {
 
+    @Bean
+    public ModelMapper Mapper(){
+        return new ModelMapper();
+    }
 }

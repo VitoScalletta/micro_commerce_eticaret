@@ -1,16 +1,26 @@
 package com.microcommerce.productservice.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
+@Getter
+@Setter
+@Data
 public class CreateProductRequestDto {
     @NotBlank(message = "İsim boş bırakılamaz")
-    String name;
+    private String name;
 
-    @NotBlank(message = "Fiyat boş bırakılamaz")
-    BigDecimal price;
+    @Positive
+    @NotNull(message = "Fiyat boş bırakılamaz")
+    private BigDecimal price;
 
-    @NotBlank(message = "Stok miktarı boş bırakılamaz")
-    Integer stockQuantity;
+    @Positive
+    @NotNull(message = "Stok miktarı boş bırakılamaz")
+    private Integer stockQuantity;
 }
