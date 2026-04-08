@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "orders")
 @Getter
@@ -22,10 +24,10 @@ public class Order {
     private Long productId;
 
     @Column(nullable = false)
-    private Integer stockQuantity;
+    private BigDecimal quantity;
 
     @Column(nullable = false)
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,7 +15,7 @@ import lombok.Setter;
 public class OrderResponseDto {
     private Long orderId;
     private Long productId;
-    private Integer quantity;
-    private Double totalPrice;
+    private BigDecimal quantity;
+    private BigDecimal totalPrice;
     private OrderStatus orderStatus;
 }
