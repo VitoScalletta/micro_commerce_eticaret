@@ -24,7 +24,7 @@ public class Order {
     private Long productId;
 
     @Column(nullable = false)
-    private BigDecimal quantity;
+    private Integer quantity;
 
     @Column(nullable = false)
     private BigDecimal totalPrice;

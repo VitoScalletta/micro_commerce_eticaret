@@ -14,6 +14,6 @@ public class MapperConfig {
 
         // ModelMapper'a "Sadece isimleri birebir aynı olanları eşleştir, akıllılık yapma" diyoruz.
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        return new ModelMapper();
+        return modelMapper;
     }
 }

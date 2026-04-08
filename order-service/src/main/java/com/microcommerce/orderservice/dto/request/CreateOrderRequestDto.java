@@ -16,7 +16,7 @@ public class CreateOrderRequestDto {
     private Long productId;
 
     @NotNull(message = "StockQuantity boş bırakılamaz")
-    private Integer stockQuantity;
+    private Integer quantity;
 
 
 }

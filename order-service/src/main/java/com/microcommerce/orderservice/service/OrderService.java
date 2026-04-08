@@ -20,14 +20,14 @@ public class OrderService {
 
     public OrderResponseDto createOrder(CreateOrderRequestDto requestDto) {
         Order order = modelMapper.map(requestDto, Order.class);
+        order.setId(null);
         order.setOrderStatus(OrderStatus.PENDING);
 
         BigDecimal fakePrice = BigDecimal.valueOf(100);
-        BigDecimal quantity = BigDecimal.valueOf(requestDto.getStockQuantity());
+        BigDecimal quantity = BigDecimal.valueOf(requestDto.getQuantity());
         order.setTotalPrice(fakePrice.multiply(quantity));
 
         Order createdOrder = orderRepository.save(order);
-        OrderResponseDto responseDto = modelMapper.map(createdOrder, OrderResponseDto.class);
         return modelMapper.map(createdOrder, OrderResponseDto.class);
     }
 
