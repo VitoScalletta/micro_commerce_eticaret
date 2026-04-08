@@ -1,4 +1,7 @@
 package com.microcommerce.orderservice.entity;
 
-public class OrderStatus {
+public enum OrderStatus {
+    PENDING,
+    COMPLETED,
+    CANCELLED,
 }
