@@ -1,9 +1,11 @@
 package com.microcommerce.orderservice.service;
 
+import com.microcommerce.orderservice.dto.event.OrderCreatedEvent;
 import com.microcommerce.orderservice.dto.request.CreateOrderRequestDto;
 import com.microcommerce.orderservice.dto.response.OrderResponseDto;
 import com.microcommerce.orderservice.entity.Order;
 import com.microcommerce.orderservice.entity.OrderStatus;
+import com.microcommerce.orderservice.publisher.OrderEventPublisher;
 import com.microcommerce.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -17,6 +19,7 @@ import java.math.BigDecimal;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
+    private final OrderEventPublisher orderEventPublisher;
 
     public OrderResponseDto createOrder(CreateOrderRequestDto requestDto) {
         Order order = modelMapper.map(requestDto, Order.class);
@@ -28,6 +31,8 @@ public class OrderService {
         order.setTotalPrice(fakePrice.multiply(quantity));
 
         Order createdOrder = orderRepository.save(order);
+        OrderCreatedEvent event = new OrderCreatedEvent(createdOrder.getProductId(), createdOrder.getQuantity());
+        orderEventPublisher.publishOrderCreatedEvent(event);
         return modelMapper.map(createdOrder, OrderResponseDto.class);
     }
 
