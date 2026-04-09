@@ -11,7 +11,7 @@ public class OrderEventPublisher {
     private final RabbitTemplate rabbitTemplate;
 
     public void publishOrderCreatedEvent(OrderCreatedEvent event) {
-        rabbitTemplate.convertAndSend("orderCreatedExchange", "orderCreated", event);
+        rabbitTemplate.convertAndSend("order-Exchange", "order.created", event);
         System.out.println("OrderCreated event published: " + event.getProductId() + "Numaralı ürün satıldı");
     }
 

@@ -23,7 +23,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding orderCreatedBinding(Queue orderCreatedQueue, DirectExchange orderExchange) {
-        return BindingBuilder.bind(orderCreatedQueue).to(orderExchange).with("order-created");
+        return BindingBuilder.bind(orderCreatedQueue).to(orderExchange).with("order.created");
     }
 
     @Bean

@@ -5,6 +5,7 @@ import com.microcommerce.productservice.dto.response.ProductResponseDto;
 import com.microcommerce.productservice.entity.Product;
 import com.microcommerce.productservice.exception.ProductNotFoundException;
 import com.microcommerce.productservice.repository.ProductRepository;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,18 @@ public class ProductService {
         existingProduct.setStockQuantity(requestDto.getStockQuantity());
 
         return modelMapper.map(productRepository.save(existingProduct), ProductResponseDto.class);
+    }
+
+    @Transactional
+    public void reduceStock(Long productId, Integer quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(()-> new RuntimeException("Ürün Bulunamadı"));
+
+        if (product.getStockQuantity() < quantity) {
+            throw new RuntimeException("Stok Yetersiz!");
+        }
+        product.setStockQuantity(product.getStockQuantity() - quantity);
+        productRepository.save(product);
+        System.out.println("Stok Başarıyla güncellendi! Ürün Id : "+productId+"Yeni Stok : "+ product.getStockQuantity() );
     }
 }
