@@ -1,5 +1,6 @@
 package com.microcommerce.productservice.config;
 
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -10,5 +11,10 @@ public class RabbitMQConfig {
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new JacksonJsonMessageConverter();
+    }
+
+    @Bean
+    public DirectExchange directExchange() {
+        return new DirectExchange("product-exchange",true,false);
     }
 }
