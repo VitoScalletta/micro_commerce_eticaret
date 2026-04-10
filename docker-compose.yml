@@ -26,3 +26,12 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  payment-db:
+    image: postgres:15
+    container_name: payment_db_container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: payment_db
+    ports:
+      - "5435:5432"
