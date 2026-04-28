@@ -62,17 +62,17 @@ public class ProductService {
 
     @Transactional
     public void reduceStock(OrderCreatedEvent event) {
-        Product product = productRepository.findById(productId)
+        Product product = productRepository.findById(event.getProductId())
                 .orElseThrow(()-> new RuntimeException("Ürün Bulunamadı"));
 
-        if (product.getStockQuantity() < quantity) {
+        if (product.getStockQuantity() < event.getQuantity()) {
             throw new RuntimeException("Stok Yetersiz!");
         }
-        product.setStockQuantity(product.getStockQuantity() - quantity);
+        product.setStockQuantity(product.getStockQuantity() - event.getQuantity());
         productRepository.save(product);
-        System.out.println("Stok Başarıyla güncellendi! Ürün Id : "+productId+"Yeni Stok : "+ product.getStockQuantity() );
+        System.out.println("Stok Başarıyla güncellendi! Ürün Id : "+event.getProductId()+"Yeni Stok : "+ product.getStockQuantity() );
         StockReservedEvent stockReservedEvent = new StockReservedEvent(
-
+            event.getOrderId(),event.getUserId(),event.getTotalPrice()
         );
     }
 }
