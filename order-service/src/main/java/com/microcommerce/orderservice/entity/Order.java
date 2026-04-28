@@ -24,6 +24,8 @@ public class Order {
     private Long productId;
 
     @Column(nullable = false)
+    private Long userId;
+    @Column(nullable = false)
     private Integer quantity;
 
     @Column(nullable = false)

@@ -15,6 +15,8 @@ public class CreateOrderRequestDto {
     @NotNull(message = "ProductId boş bırakılamaz")
     private Long productId;
 
+    @NotNull(message = "UserId boş bırakılamaz")
+    private Long userId;
     @NotNull(message = "StockQuantity boş bırakılamaz")
     private Integer quantity;
 

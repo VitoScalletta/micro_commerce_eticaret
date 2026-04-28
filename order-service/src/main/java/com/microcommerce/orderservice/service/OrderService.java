@@ -31,7 +31,13 @@ public class OrderService {
         order.setTotalPrice(fakePrice.multiply(quantity));
 
         Order createdOrder = orderRepository.save(order);
-        OrderCreatedEvent event = new OrderCreatedEvent(createdOrder.getProductId(), createdOrder.getQuantity());
+        OrderCreatedEvent event = new OrderCreatedEvent(
+                createdOrder.getId(),
+                createdOrder.getUserId(),
+                createdOrder.getProductId(),
+                createdOrder.getTotalPrice(),
+                createdOrder.getQuantity()
+        );
         orderEventPublisher.publishOrderCreatedEvent(event);
         return modelMapper.map(createdOrder, OrderResponseDto.class);
     }

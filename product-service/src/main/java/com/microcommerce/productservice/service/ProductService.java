@@ -1,9 +1,12 @@
 package com.microcommerce.productservice.service;
 
+import com.microcommerce.productservice.dto.event.OrderCreatedEvent;
+import com.microcommerce.productservice.dto.event.StockReservedEvent;
 import com.microcommerce.productservice.dto.request.CreateProductRequestDto;
 import com.microcommerce.productservice.dto.response.ProductResponseDto;
 import com.microcommerce.productservice.entity.Product;
 import com.microcommerce.productservice.exception.ProductNotFoundException;
+import com.microcommerce.productservice.messaging.publisher.ProductEventPublisher;
 import com.microcommerce.productservice.repository.ProductRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+    private final ProductEventPublisher productEventPublisher;
 
     public ProductResponseDto createProduct(CreateProductRequestDto requestDto) {
         Product product = modelMapper.map(requestDto, Product.class);
@@ -57,7 +61,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void reduceStock(Long productId, Integer quantity) {
+    public void reduceStock(OrderCreatedEvent event) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(()-> new RuntimeException("Ürün Bulunamadı"));
 
@@ -67,5 +71,8 @@ public class ProductService {
         product.setStockQuantity(product.getStockQuantity() - quantity);
         productRepository.save(product);
         System.out.println("Stok Başarıyla güncellendi! Ürün Id : "+productId+"Yeni Stok : "+ product.getStockQuantity() );
+        StockReservedEvent stockReservedEvent = new StockReservedEvent(
+
+        );
     }
 }
