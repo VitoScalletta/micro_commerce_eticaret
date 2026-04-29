@@ -11,6 +11,5 @@ public class StockReservedEventConsumer {
 
     @RabbitListener(queues = "stock-reserved-queue")
     public void StockReservedEvent(StockReservedEvent event){
-        System.out.println("Veznedar mektubu aldı! Sipariş ID: \" + event.getOrderId() + \" | Müşteri ID: \" + event.getUserId() + \" | Tutar: \" + event.getTotalPrice()");
-    }
+        System.out.println("Veznedar mektubu aldı! Sipariş ID: " + event.getOrderId() + " | Müşteri ID: " + event.getUserId() + " | Tutar: " + event.getTotalPrice());}
 }

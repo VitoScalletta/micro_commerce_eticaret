@@ -13,7 +13,12 @@ public class OrderEventConsumer {
 
     @RabbitListener(queues = "order-created-queue")
     public void consumeOrderCreatedEvent(OrderCreatedEvent event) {
-        System.out.println("Order Created Event ürün ID: "+event.getProductId());
-        productService.reduceStock(event);
+        try{
+            System.out.println("Order Created Event: " + event.getProductId());
+            productService.reduceStock(event);
+        }
+        catch (Exception ex){
+            System.out.println("Hata : "+ ex.getMessage());
+        }
     }
 }
