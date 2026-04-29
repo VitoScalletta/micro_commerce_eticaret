@@ -11,7 +11,7 @@ public class ProductEventPublisher {
     private final RabbitTemplate rabbitTemplate;
 
     public void publishStockReservedEvent(StockReservedEvent event) {
-        rabbitTemplate.convertAndSend("product-exchange","stock.reserved",event);
+        rabbitTemplate.convertAndSend("productExchange","stock.reserved",event);
         System.out.println("Stock Reserved Event Published");
     }
 }
