@@ -11,6 +11,29 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
+
+    @Bean
+    public DirectExchange paymentExchange() {
+        return new DirectExchange("payment-exchange");
+    }
+    @Bean
+    public Queue paymentCompleteQueue() {
+        return new Queue("payment-completed-queue");
+    }
+
+    @Bean
+    public Queue paymentFailedQueue() {
+        return new Queue("payment-failed-queue");
+    }
+
+    @Bean
+    public Binding paymentCompleteBinding(Queue paymentCompleteQueue, DirectExchange paymentExchange) {
+        return BindingBuilder.bind(paymentCompleteQueue).to(paymentExchange).with("payment.completed");
+    }
+    @Bean
+    public Binding paymentFailedBinding(Queue paymentFailedQueue, DirectExchange paymentExchange) {
+        return BindingBuilder.bind(paymentFailedQueue).to(paymentExchange).with("payment.failed");
+    }
     @Bean
     public Queue orderCreatedQueue() {
         return new Queue("order-created-queue",true);

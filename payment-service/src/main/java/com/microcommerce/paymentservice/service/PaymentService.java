@@ -32,10 +32,8 @@ public class PaymentService {
         }
         else{
             System.out.println("Payment Failed : Yetersiz bakiye Sipariş id : "+ event.getOrderId());
-            PaymentFailedEvent failedEvent = new PaymentFailedEvent(event.getOrderId(),1L,2);
-            paymentEventPublisher.publishPaymentCompletedEvent(failedEvent);
-
-
+            PaymentFailedEvent failedEvent = new PaymentFailedEvent(event.getOrderId(), event.getProductId(), event.getQuantity());
+            paymentEventPublisher.publishPaymentFailedEvent(failedEvent);
         }
     }
 }

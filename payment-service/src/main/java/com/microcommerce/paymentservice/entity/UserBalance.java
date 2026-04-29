@@ -1,15 +1,13 @@
 package com.microcommerce.paymentservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "user_balances")
+@Table(name = "user_balance")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -23,6 +21,6 @@ public class UserBalance {
     @Column(nullable = false,unique = true)
     private Long userId;
 
-    @Column(nullable = false)
+
     private BigDecimal balance;
 }
