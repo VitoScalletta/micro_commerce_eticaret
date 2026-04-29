@@ -74,5 +74,7 @@ public class ProductService {
         StockReservedEvent stockReservedEvent = new StockReservedEvent(
             event.getOrderId(),event.getUserId(),event.getTotalPrice()
         );
+
+        productEventPublisher.publishStockReservedEvent(stockReservedEvent);
     }
 }
