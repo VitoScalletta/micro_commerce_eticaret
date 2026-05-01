@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class PaymentFailedEvent {
     private Long orderId;
     private Long productId;
-    private Long quantity;
+    private Integer quantity;
 }

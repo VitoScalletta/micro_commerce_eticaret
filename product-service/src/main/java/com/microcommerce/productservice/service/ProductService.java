@@ -1,6 +1,7 @@
 package com.microcommerce.productservice.service;
 
 import com.microcommerce.productservice.dto.event.OrderCreatedEvent;
+import com.microcommerce.productservice.dto.event.PaymentFailedEvent;
 import com.microcommerce.productservice.dto.event.StockReservedEvent;
 import com.microcommerce.productservice.dto.request.CreateProductRequestDto;
 import com.microcommerce.productservice.dto.response.ProductResponseDto;
@@ -76,5 +77,16 @@ public class ProductService {
         );
 
         productEventPublisher.publishStockReservedEvent(stockReservedEvent);
+    }
+
+    @Transactional
+    public void restoreStock(PaymentFailedEvent event){
+        Product product = productRepository.findById(event.getProductId())
+                .orElseThrow(()-> new ProductNotFoundException("İade işlemi için ürün bulunamadı : "+event.getProductId()));
+
+        product.setStockQuantity(product.getStockQuantity() + event.getQuantity());
+        productRepository.save(product);
+        System.out.println("Rollback başarılı:Ödeme reddi sebebiyle "+event.getQuantity()+
+                    " adet stok geri eklendi Ürün id : "+event.getProductId());
     }
 }

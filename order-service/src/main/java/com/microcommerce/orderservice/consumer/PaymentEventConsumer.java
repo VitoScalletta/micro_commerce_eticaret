@@ -25,7 +25,7 @@ public class PaymentEventConsumer {
         System.out.println("SAGA finito resultante importante si?");
     }
 
-    @RabbitListener(queues = "payment-failed-queue")
+    @RabbitListener(queues = "order-payment-failed-queue")
     public void consumePaymentFailedEvent(PaymentFailedEvent event) {
         System.out.println("Received Payment Failed Event"+event.getOrderId());
 

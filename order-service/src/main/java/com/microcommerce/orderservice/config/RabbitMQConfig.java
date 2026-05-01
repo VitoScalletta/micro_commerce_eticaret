@@ -22,18 +22,24 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue paymentFailedQueue() {
-        return new Queue("payment-failed-queue");
+    public Queue orderpaymentFailedQueue() {
+        return new Queue("order-payment-failed-queue");
     }
 
     @Bean
-    public Binding paymentCompleteBinding(Queue paymentCompleteQueue, DirectExchange paymentExchange) {
-        return BindingBuilder.bind(paymentCompleteQueue).to(paymentExchange).with("payment.completed");
+    public Queue productPaymentFailedQueue() {
+        return new Queue("product-payment-failed-queue");
     }
     @Bean
-    public Binding paymentFailedBinding(Queue paymentFailedQueue, DirectExchange paymentExchange) {
-        return BindingBuilder.bind(paymentFailedQueue).to(paymentExchange).with("payment.failed");
+    public Binding orderPaymentFailedBinding(Queue orderPaymentFailedQueue, DirectExchange paymentExchange) {
+        return BindingBuilder.bind(orderPaymentFailedQueue).to(paymentExchange).with("payment.failed");
     }
+
+    @Bean
+    public Binding productPaymentFailedBinding(Queue productPaymentFailedQueue, DirectExchange paymentExchange) {
+        return BindingBuilder.bind(productPaymentFailedQueue).to(paymentExchange).with("payment.failed");
+    }
+
     @Bean
     public Queue orderCreatedQueue() {
         return new Queue("order-created-queue",true);
