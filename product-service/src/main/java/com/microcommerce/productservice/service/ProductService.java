@@ -73,7 +73,7 @@ public class ProductService {
         productRepository.save(product);
         System.out.println("Stok Başarıyla güncellendi! Ürün Id : "+event.getProductId()+"Yeni Stok : "+ product.getStockQuantity() );
         StockReservedEvent stockReservedEvent = new StockReservedEvent(
-            event.getOrderId(),event.getUserId(),event.getTotalPrice()
+            event.getOrderId(),event.getUserId(),event.getTotalPrice(),event.getProductId(),event.getQuantity()
         );
 
         productEventPublisher.publishStockReservedEvent(stockReservedEvent);

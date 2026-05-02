@@ -8,6 +8,7 @@ import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 @Configuration
 public class RabbitMQConfig {
@@ -30,15 +31,6 @@ public class RabbitMQConfig {
     public Queue productPaymentFailedQueue() {
         return new Queue("product-payment-failed-queue");
     }
-    @Bean
-    public Binding orderPaymentFailedBinding(Queue orderPaymentFailedQueue, DirectExchange paymentExchange) {
-        return BindingBuilder.bind(orderPaymentFailedQueue).to(paymentExchange).with("payment.failed");
-    }
-
-    @Bean
-    public Binding productPaymentFailedBinding(Queue productPaymentFailedQueue, DirectExchange paymentExchange) {
-        return BindingBuilder.bind(productPaymentFailedQueue).to(paymentExchange).with("payment.failed");
-    }
 
     @Bean
     public Queue orderCreatedQueue() {
@@ -50,14 +42,27 @@ public class RabbitMQConfig {
         return new DirectExchange("order-exchange");
     }
 
-    @Bean
-    public Binding orderCreatedBinding(Queue orderCreatedQueue, DirectExchange orderExchange) {
-        return BindingBuilder.bind(orderCreatedQueue).to(orderExchange).with("order.created");
-    }
 
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new JacksonJsonMessageConverter();
+    }
+
+    @Bean
+    public Binding paymentCompleteBinding(@Qualifier("paymentCompleteQueue") Queue paymentCompleteQueue, DirectExchange paymentExchange) {
+        return BindingBuilder.bind(paymentCompleteQueue).to(paymentExchange).with("payment.completed");
+    }
+    @Bean
+    public Binding orderCreatedBinding(@Qualifier("orderCreatedQueue")Queue orderCreatedQueue, DirectExchange orderExchange) {
+        return BindingBuilder.bind(orderCreatedQueue).to(orderExchange).with("order.created");
+    }
+    @Bean
+    public Binding productPaymentFailedBinding(@Qualifier("productPaymentFailedQueue")Queue productPaymentFailedQueue, DirectExchange paymentExchange) {
+        return BindingBuilder.bind(productPaymentFailedQueue).to(paymentExchange).with("payment.failed");
+    }
+    @Bean
+    public Binding orderPaymentFailedBinding(@Qualifier("orderpaymentFailedQueue") Queue orderPaymentFailedQueue, DirectExchange paymentExchange) {
+        return BindingBuilder.bind(orderPaymentFailedQueue).to(paymentExchange).with("payment.failed");
     }
 
 }

@@ -14,5 +14,5 @@ public class StockReservedEvent {
     private Long userId;
     private BigDecimal totalPrice;
     private Long productId;
-    private Long quantity;
+    private Integer quantity;
 }
