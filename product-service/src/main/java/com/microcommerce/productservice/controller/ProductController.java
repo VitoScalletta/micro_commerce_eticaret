@@ -3,6 +3,7 @@ package com.microcommerce.productservice.controller;
 import com.microcommerce.productservice.dto.request.CreateProductRequestDto;
 import com.microcommerce.productservice.dto.response.ProductResponseDto;
 import com.microcommerce.productservice.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductResponseDto> createProduct(
-            @RequestBody CreateProductRequestDto createProductRequestDto)
+           @Valid @RequestBody CreateProductRequestDto createProductRequestDto)
     {
         return ResponseEntity.ok(productService.createProduct(createProductRequestDto));
     }
