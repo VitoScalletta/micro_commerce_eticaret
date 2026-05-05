@@ -1,6 +1,7 @@
 package com.microcommerce.notificationservice.messaging.consumer;
 
 import com.microcommerce.notificationservice.dto.event.PaymentCompletedEvent;
+import com.microcommerce.notificationservice.dto.event.PaymentFailedEvent;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class NotificationConsumer {
     }
 
     @RabbitListener(queues = "notification-payment-failed-queue")
-    public void sendFailureEmail(PaymentCompletedEvent event) {
+    public void sendFailureEmail(PaymentFailedEvent event) {
         System.out.println("-----------------------");
         System.out.println("---Gönderilen E-posta---");
         System.out.println("Kime : "+event.getUserId());

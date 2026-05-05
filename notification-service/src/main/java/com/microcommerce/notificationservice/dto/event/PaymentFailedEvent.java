@@ -11,4 +11,5 @@ public class PaymentFailedEvent {
     private Long orderId;
     private Long productId;
     private Integer quantity;
+    private Long userId;
 }
